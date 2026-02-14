@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Love ❤️</title>
-<!-- Google Romantic Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<!-- Google Fonts: Sacramento for romantic script + Poppins for readable body -->
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 <style>
 body {
     margin: 0;
@@ -58,25 +58,30 @@ body {
     align-items: center;
 }
 .lock-screen h1 {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3rem;
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin: 0 20px;
+    text-align: center;
 }
 .lock-screen input {
-    padding: 10px;
-    border-radius: 10px;
+    padding: 12px 20px;
+    border-radius: 12px;
     border: none;
-    margin-top: 15px;
+    margin-top: 20px;
     font-size: 1.1rem;
+    width: 220px;
+    max-width: 80%;
 }
 .lock-screen button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    border-radius: 20px;
+    margin-top: 20px;
+    padding: 12px 30px;
+    border-radius: 30px;
     border: none;
     cursor: pointer;
-    background: #ff69b4;
+    background: #ff85c0; /* softer pink */
     color: white;
     font-weight: bold;
+    font-size: 1.1rem;
 }
 /* Content */
 .container {
@@ -88,24 +93,27 @@ body {
     justify-content: center;
 }
 .title {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3.5rem;
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(3rem, 10vw, 5rem);
     margin: 0;
 }
 .message {
-    max-width: 700px;
-    margin: 20px auto;
-    font-size: 1.3rem;
-    line-height: 1.7;
-    min-height: 180px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    max-width: 720px;
+    margin: 30px auto;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
+    line-height: 1.9;
+    letter-spacing: 0.4px;
+    min-height: 200px;
 }
 .reveal {
     opacity: 0;
-    font-family: 'Great Vibes', cursive;
-    font-size: 4rem;
-    margin-top: 30px;
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    margin-top: 40px;
     transition: opacity 3s ease, transform 3s ease;
-    transform: scale(0.5);
+    transform: scale(0.6);
 }
 </style>
 </head>
@@ -187,15 +195,13 @@ function unlock() {
         const audio = document.getElementById("bgMusic");
         audio.play().catch(err => {
             console.log("Autoplay was prevented:", err);
-            // Music will play on next user interaction if blocked
         });
         
         typeLetter();
     } else {
-        alert("Wrong password ❤️\nTry again, love!");
+        alert("Wrong password ❤️\nTry again, my love!");
     }
 }
 </script>
 </body>
 </html>
-
