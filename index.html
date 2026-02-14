@@ -5,16 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Love ❤️</title>
 
+<!-- Google Romantic Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
 <style>
+
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
     color: white;
-    text-align: center;
 }
 
-/* LOCK SCREEN */
+/* Background Slideshow */
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: slideShow 20s infinite;
+}
+
+.background img:nth-child(1) { animation-delay: 0s; }
+.background img:nth-child(2) { animation-delay: 5s; }
+.background img:nth-child(3) { animation-delay: 10s; }
+.background img:nth-child(4) { animation-delay: 15s; }
+
+@keyframes slideShow {
+    0% { opacity: 0; }
+    5% { opacity: 1; }
+    25% { opacity: 1; }
+    30% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+/* Lock Screen */
 .lock-screen {
     height: 100vh;
     display: flex;
@@ -23,9 +64,14 @@ body {
     align-items: center;
 }
 
+.lock-screen h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+}
+
 .lock-screen input {
-    padding: 12px;
-    border-radius: 8px;
+    padding: 10px;
+    border-radius: 10px;
     border: none;
     margin-top: 15px;
 }
@@ -35,81 +81,74 @@ body {
     padding: 10px 20px;
     border-radius: 20px;
     border: none;
-    background: white;
-    color: #ff4d6d;
     cursor: pointer;
 }
 
-/* MAIN CONTENT */
+/* Content */
 .container {
     display: none;
-    padding: 40px 20px;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
 }
 
 .message {
-    font-size: 1.4rem;
-    max-width: 600px;
+    max-width: 700px;
     margin: auto;
-    line-height: 1.6;
+    font-size: 1.3rem;
+    line-height: 1.7;
     min-height: 180px;
 }
 
-/* PHOTO GALLERY */
-.gallery {
-    margin-top: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    opacity: 0;
-    transition: opacity 3s;
-}
-
-.gallery img {
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 20px;
-}
-
-/* LOVE REVEAL */
 .reveal {
     opacity: 0;
-    font-size: 3rem;
-    margin-top: 40px;
-    transition: opacity 3s, transform 3s;
+    font-family: 'Great Vibes', cursive;
+    font-size: 4rem;
+    margin-top: 30px;
+    transition: opacity 3s ease, transform 3s ease;
     transform: scale(0.5);
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD SCREEN -->
-<div class="lock-screen" id="lockScreen">
-    <h1>❤️ A Surprise Awaits ❤️</h1>
-    <p>Enter Password</p>
-    <input type="password" id="password">
-    <button onclick="unlock()">Unlock 💖</button>
-</div>
-
-<!-- MAIN PAGE -->
-<div class="container" id="content">
-
-<audio autoplay loop>
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<h1>For My Beautiful Wife ❤️</h1>
-
-<p class="message" id="typing"></p>
-
-<div class="gallery" id="gallery">
+<div class="background">
     <img src="photo1.jpg">
     <img src="photo2.jpg">
     <img src="photo3.jpg">
     <img src="photo4.jpg">
 </div>
+
+<div class="overlay"></div>
+
+<!-- PASSWORD SCREEN -->
+<div class="lock-screen" id="lockScreen">
+    <h1>❤️ A Surprise For You ❤️</h1>
+    <input type="password" id="password" placeholder="Enter Password"
+        onkeypress="if(event.key==='Enter') unlock();">
+    <button onclick="unlock()">Unlock 💖</button>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container" id="content">
+
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="title">For My Beautiful Wife ❤️</div>
+
+<p class="message" id="typing"></p>
 
 <div class="reveal" id="reveal">
     I LOVE YOU ❤️
@@ -122,19 +161,18 @@ body {
 const loveMessage = `
 My Love,
 
-You are the best thing that ever happened to me.
-You walked into my life and made everything brighter.
+From the day you entered my life,
+everything became more meaningful.
 
-Through every smile, every challenge,
-every moment — I am grateful for you.
+Your smile is my peace,
+your voice is my comfort,
+your presence is my strength.
 
-I promise to love you,
-respect you,
-support you,
-and stand beside you forever.
+I promise to love you endlessly,
+stand beside you always,
+and choose you every single day.
 
-You are my home.
-You are my heart.
+You are my forever.
 `;
 
 let index = 0;
@@ -143,21 +181,11 @@ function typeLetter() {
     if (index < loveMessage.length) {
         document.getElementById("typing").innerHTML +=
             loveMessage.charAt(index) === "\n" ? "<br>" : loveMessage.charAt(index);
-
         index++;
         setTimeout(typeLetter, 50);
+    } else {
+        setTimeout(showReveal, 2000);
     }
-    else {
-        showGallery();
-    }
-}
-
-function showGallery() {
-    document.getElementById("gallery").style.opacity = 1;
-
-    setTimeout(() => {
-        showReveal();
-    }, 2500);
 }
 
 function showReveal() {
@@ -167,15 +195,15 @@ function showReveal() {
 }
 
 function unlock() {
-    const correctPassword = "01052024";  // CHANGE PASSWORD HERE
+    const correctPassword = "01052024";   // YOUR PASSWORD
     const entered = document.getElementById("password").value;
 
     if (entered === correctPassword) {
         document.getElementById("lockScreen").style.display = "none";
-        document.getElementById("content").style.display = "block";
+        document.getElementById("content").style.display = "flex";
+        document.getElementById("bgMusic").play();
         typeLetter();
-    }
-    else {
+    } else {
         alert("Wrong password ❤️");
     }
 }
@@ -184,4 +212,3 @@ function unlock() {
 
 </body>
 </html>
-
