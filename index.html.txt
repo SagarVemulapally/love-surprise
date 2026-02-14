@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    color: white;
+    text-align: center;
+}
+
+/* LOCK SCREEN */
+.lock-screen {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lock-screen input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 15px;
+}
+
+.lock-screen button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: white;
+    color: #ff4d6d;
+    cursor: pointer;
+}
+
+/* MAIN CONTENT */
+.container {
+    display: none;
+    padding: 40px 20px;
+}
+
+.message {
+    font-size: 1.4rem;
+    max-width: 600px;
+    margin: auto;
+    line-height: 1.6;
+    min-height: 180px;
+}
+
+/* PHOTO GALLERY */
+.gallery {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    opacity: 0;
+    transition: opacity 3s;
+}
+
+.gallery img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+/* LOVE REVEAL */
+.reveal {
+    opacity: 0;
+    font-size: 3rem;
+    margin-top: 40px;
+    transition: opacity 3s, transform 3s;
+    transform: scale(0.5);
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div class="lock-screen" id="lockScreen">
+    <h1>❤️ A Surprise Awaits ❤️</h1>
+    <p>Enter Password</p>
+    <input type="password" id="password">
+    <button onclick="unlock()">Unlock 💖</button>
+</div>
+
+<!-- MAIN PAGE -->
+<div class="container" id="content">
+
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<h1>For My Beautiful Wife ❤️</h1>
+
+<p class="message" id="typing"></p>
+
+<div class="gallery" id="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+</div>
+
+<div class="reveal" id="reveal">
+    I LOVE YOU ❤️
+</div>
+
+</div>
+
+<script>
+
+const loveMessage = `
+My Love,
+
+You are the best thing that ever happened to me.
+You walked into my life and made everything brighter.
+
+Through every smile, every challenge,
+every moment — I am grateful for you.
+
+I promise to love you,
+respect you,
+support you,
+and stand beside you forever.
+
+You are my home.
+You are my heart.
+`;
+
+let index = 0;
+
+function typeLetter() {
+    if (index < loveMessage.length) {
+        document.getElementById("typing").innerHTML +=
+            loveMessage.charAt(index) === "\n" ? "<br>" : loveMessage.charAt(index);
+
+        index++;
+        setTimeout(typeLetter, 50);
+    }
+    else {
+        showGallery();
+    }
+}
+
+function showGallery() {
+    document.getElementById("gallery").style.opacity = 1;
+
+    setTimeout(() => {
+        showReveal();
+    }, 2500);
+}
+
+function showReveal() {
+    let reveal = document.getElementById("reveal");
+    reveal.style.opacity = 1;
+    reveal.style.transform = "scale(1)";
+}
+
+function unlock() {
+    const correctPassword = "forever";  // CHANGE PASSWORD HERE
+    const entered = document.getElementById("password").value;
+
+    if (entered === correctPassword) {
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        typeLetter();
+    }
+    else {
+        alert("Wrong password ❤️");
+    }
+}
+
+</script>
+
+</body>
+</html>
