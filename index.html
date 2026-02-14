@@ -4,19 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Love ❤️</title>
-
 <!-- Google Romantic Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-
 <style>
-
 body {
     margin: 0;
     overflow: hidden;
     font-family: 'Poppins', sans-serif;
     color: white;
 }
-
 /* Background Slideshow */
 .background {
     position: fixed;
@@ -24,7 +20,6 @@ body {
     height: 100%;
     z-index: -1;
 }
-
 .background img {
     position: absolute;
     width: 100%;
@@ -33,12 +28,10 @@ body {
     opacity: 0;
     animation: slideShow 20s infinite;
 }
-
 .background img:nth-child(1) { animation-delay: 0s; }
 .background img:nth-child(2) { animation-delay: 5s; }
 .background img:nth-child(3) { animation-delay: 10s; }
 .background img:nth-child(4) { animation-delay: 15s; }
-
 @keyframes slideShow {
     0% { opacity: 0; }
     5% { opacity: 1; }
@@ -46,7 +39,6 @@ body {
     30% { opacity: 0; }
     100% { opacity: 0; }
 }
-
 /* Overlay */
 .overlay {
     position: fixed;
@@ -55,7 +47,6 @@ body {
     background: rgba(0,0,0,0.5);
     z-index: -1;
 }
-
 /* Lock Screen */
 .lock-screen {
     position: relative;
@@ -66,51 +57,48 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .lock-screen h1 {
     font-family: 'Great Vibes', cursive;
     font-size: 3rem;
 }
-
 .lock-screen input {
     padding: 10px;
     border-radius: 10px;
     border: none;
     margin-top: 15px;
+    font-size: 1.1rem;
 }
-
 .lock-screen button {
     margin-top: 15px;
     padding: 10px 20px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
+    background: #ff69b4;
+    color: white;
+    font-weight: bold;
 }
-
 /* Content */
 .container {
     display: none;
     height: 100vh;
     padding: 20px;
     text-align: center;
-    display: flex;
     flex-direction: column;
     justify-content: center;
 }
-
 .title {
     font-family: 'Great Vibes', cursive;
     font-size: 3.5rem;
+    margin: 0;
 }
-
 .message {
     max-width: 700px;
-    margin: auto;
+    margin: 20px auto;
     font-size: 1.3rem;
     line-height: 1.7;
     min-height: 180px;
 }
-
 .reveal {
     opacity: 0;
     font-family: 'Great Vibes', cursive;
@@ -119,19 +107,15 @@ body {
     transition: opacity 3s ease, transform 3s ease;
     transform: scale(0.5);
 }
-
 </style>
 </head>
-
 <body>
-
 <div class="background">
-    <img src="photo1.jpg">
-    <img src="photo2.jpg">
-    <img src="photo3.jpg">
-    <img src="photo4.jpg">
+    <img src="photo1.jpg" alt="">
+    <img src="photo2.jpg" alt="">
+    <img src="photo3.jpg" alt="">
+    <img src="photo4.jpg" alt="">
 </div>
-
 <div class="overlay"></div>
 
 <!-- PASSWORD SCREEN -->
@@ -144,46 +128,38 @@ body {
 
 <!-- MAIN CONTENT -->
 <div class="container" id="content">
-
 <audio id="bgMusic" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
-
 <div class="title">For My Beautiful Wife ❤️</div>
-
 <p class="message" id="typing"></p>
-
 <div class="reveal" id="reveal">
     I LOVE YOU ❤️
 </div>
-
 </div>
 
 <script>
-
 const loveMessage = `
 My Love,
-
 From the day you entered my life,
 everything became more meaningful.
-
 Your smile is my peace,
 your voice is my comfort,
 your presence is my strength.
-
 I promise to love you endlessly,
 stand beside you always,
 and choose you every single day.
-
 You are my forever.
 `;
 
 let index = 0;
+let isUnlocked = false;
 
 function typeLetter() {
     if (index < loveMessage.length) {
-        document.getElementById("typing").innerHTML +=
-            loveMessage.charAt(index) === "\n" ? "<br>" : loveMessage.charAt(index);
+        const char = loveMessage.charAt(index);
+        document.getElementById("typing").innerHTML += 
+            (char === "\n") ? "<br>" : char;
         index++;
         setTimeout(typeLetter, 50);
     } else {
@@ -192,27 +168,34 @@ function typeLetter() {
 }
 
 function showReveal() {
-    let reveal = document.getElementById("reveal");
+    const reveal = document.getElementById("reveal");
     reveal.style.opacity = 1;
     reveal.style.transform = "scale(1)";
 }
 
 function unlock() {
-    const correctPassword = "01052024";   // YOUR PASSWORD
-    const entered = document.getElementById("password").value;
+    if (isUnlocked) return;
+
+    const correctPassword = "01052024";
+    const entered = document.getElementById("password").value.trim();
 
     if (entered === correctPassword) {
+        isUnlocked = true;
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("content").style.display = "flex";
-        document.getElementById("bgMusic").play();
+        
+        const audio = document.getElementById("bgMusic");
+        audio.play().catch(err => {
+            console.log("Autoplay was prevented:", err);
+            // Music will play on next user interaction if blocked
+        });
+        
         typeLetter();
     } else {
-        alert("Wrong password ❤️");
+        alert("Wrong password ❤️\nTry again, love!");
     }
 }
-
 </script>
-
 </body>
 </html>
 
